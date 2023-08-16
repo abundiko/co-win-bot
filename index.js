@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const { Client } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
-const { chat } = require("./src/utils/openai");
 const welcome = require("./src/models/first");
 const { clubs, plans } = require("./src/models/data");
 const { delay } = require("./src/utils/functions");
