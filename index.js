@@ -207,7 +207,7 @@ app.get('/end',(req, res)=>{
   if(SERVER){
     SERVER.close(()=>{console.log('stopped');
                      SERVER = app.listen(3000, () => {
-  console.log("listening");
+  console.log("listening new...");
 });});
     
   }
@@ -215,5 +215,5 @@ app.get('/end',(req, res)=>{
 
 let port = process.env.PORT || 3000
 let SERVER = app.listen(port, "0.0.0.0", () => {
-  console.log("listening");
+  console.log("listening first...");
 });
