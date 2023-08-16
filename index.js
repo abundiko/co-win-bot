@@ -18,18 +18,20 @@ app.get("/", (req, res) => {
     let hasLoaded = false;
     client = new Client();
 
+    let testQR = '';
     let history = [];
     let session = {};
     let sessionHasUpdated = false;
 
     client.on("qr", qr => {
       try {
+        testQR = qr;
+        qrcode.generate(qr, { small: true });
         res.redirect(
           `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=111b21&bgcolor=eee&margin=20&data=${encodeURIComponent(
             qr
           )}`
         );
-        qrcode.generate(qr, { small: true });
       } catch (e) {}
     });
 
@@ -192,7 +194,11 @@ Favourite Club: ${newUserData.fav_club}`
 
     client.initialize();
   } else {
-    res.send("already running");
+    res.redirect(
+          `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=111b21&bgcolor=eee&margin=20&data=${encodeURIComponent(
+            testQR
+          )}`
+        );
   }
 });
 
