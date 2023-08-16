@@ -1,4 +1,5 @@
 const express = require("express");
+require('dotenv').config()
 const app = express();
 const { Client } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
@@ -212,6 +213,7 @@ app.get('/end',(req, res)=>{
   }
 });
 
-let SERVER = app.listen(3000, () => {
+let port = process.env.PORT || 3000
+let SERVER = app.listen(port, "0.0.0.0", () => {
   console.log("listening");
 });
