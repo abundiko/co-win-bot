@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const { Client } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
-const { chat } = require("./src/utils/openai");
 const welcome = require("./src/models/first");
 const { clubs, plans } = require("./src/models/data");
 const { delay } = require("./src/utils/functions");
@@ -14,6 +13,7 @@ const {
 } = require("./src/database/mongoose_client");
 let client = false;
 
+    let testQR = '';
 app.get("/", (req, res) => {
   if (!client) {
     let hasLoaded = false;
@@ -25,12 +25,13 @@ app.get("/", (req, res) => {
 
     client.on("qr", qr => {
       try {
+        testQR = qr;
+        qrcode.generate(qr, { small: true });
         res.redirect(
           `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=111b21&bgcolor=eee&margin=20&data=${encodeURIComponent(
             qr
           )}`
         );
-        qrcode.generate(qr, { small: true });
       } catch (e) {}
     });
 
@@ -193,10 +194,24 @@ Favourite Club: ${newUserData.fav_club}`
 
     client.initialize();
   } else {
-    res.send("already running");
+    res.redirect(
+          `https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=111b21&bgcolor=eee&margin=20&data=${encodeURIComponent(
+            testQR
+          )}`
+        );
   }
 });
 
-app.listen(3000, () => {
+app.get('/end',(req, res)=>{
+  if(SERVER){
+    SERVER.close(()=>{console.log('stopped');
+                     SERVER = app.listen(3000, () => {
+  console.log("listening");
+});});
+    
+  }
+});
+
+let SERVER = app.listen(3000, () => {
   console.log("listening");
 });
