@@ -202,6 +202,15 @@ Favourite Club: ${newUserData.fav_club}`
   }
 });
 
-app.listen(3000, () => {
+app.get('/end',(req, res)=>{
+  if(SERVER){
+    SERVER.close(()=>console.log('stopped'));
+    SERVER = app.listen(3000, () => {
+  console.log("listening");
+});
+  }
+});
+
+let SERVER = app.listen(3000, () => {
   console.log("listening");
 });
