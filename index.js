@@ -13,12 +13,12 @@ const {
 } = require("./src/database/mongoose_client");
 let client = false;
 
+    let testQR = '';
 app.get("/", (req, res) => {
   if (!client) {
     let hasLoaded = false;
     client = new Client();
 
-    let testQR = '';
     let history = [];
     let session = {};
     let sessionHasUpdated = false;
