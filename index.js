@@ -15,8 +15,9 @@ const {
 let client = false;
 
     let testQR = '';
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { 
   if (!client) {
+    return res.send('ok');
     let hasLoaded = false;
     client = new Client();
 
