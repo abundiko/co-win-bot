@@ -214,6 +214,6 @@ app.get('/end',(req, res)=>{
 });
 
 let port = process.env.PORT || 3000
-let SERVER = app.listen(port, "0.0.0.0", () => {
+let SERVER = app.listen(port, () => {
   console.log("listening first...", port);
 });
