@@ -17,7 +17,13 @@ let client = false;
     let testQR = '';
 app.get("/", (req, res) => { 
   if (!client) {
-    return res.send('ok');
+    setInterval(()=>{
+      if(testQR == '')
+    res.send('wait...');
+      else {
+        res.end();
+      }
+    }, 3000);
     let hasLoaded = false;
     client = new Client();
 
