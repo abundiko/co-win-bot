@@ -1,4 +1,5 @@
 const express = require("express");
+require('dotenv').config()
 const app = express();
 const { Client } = require("whatsapp-web.js");
 const qrcode = require("qrcode-terminal");
@@ -14,8 +15,15 @@ const {
 let client = false;
 
     let testQR = '';
-app.get("/", (req, res) => {
+app.get("/", (req, res) => { 
   if (!client) {
+    setInterval(()=>{
+      if(testQR == '')
+    res.send('wait...');
+      else {
+        res.end();
+      }
+    }, 3000);
     let hasLoaded = false;
     client = new Client();
 
@@ -206,12 +214,13 @@ app.get('/end',(req, res)=>{
   if(SERVER){
     SERVER.close(()=>{console.log('stopped');
                      SERVER = app.listen(3000, () => {
-  console.log("listening");
+  console.log("listening new...");
 });});
     
   }
 });
 
-let SERVER = app.listen(3000, () => {
-  console.log("listening");
+let port = process.env.PORT || 3000
+let SERVER = app.listen(port, () => {
+  console.log("listening first...", port);
 });
